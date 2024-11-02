@@ -19,7 +19,7 @@ namespace AbpCompanyName.AbpProjectName.Model.HocKyNangs
         public int MaHocKyNang { get; set; }
         public string TenKyNang { get; set; }
         public string MoTa { get; set; }
-        public int ThoiLuong { get; set; }
+        public double ThoiLuong { get; set; }
         public string TTKN { get; set; }
         public string TrangThai { get; set; }
         public bool IsHuy { get; set; }

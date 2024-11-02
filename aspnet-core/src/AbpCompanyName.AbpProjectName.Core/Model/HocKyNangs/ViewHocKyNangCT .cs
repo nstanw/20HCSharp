@@ -20,7 +20,7 @@ namespace AbpCompanyName.AbpProjectName.Model.HocKyNangs
         public int MaHocKyNang { get; set; }
         public string TenKyNang { get; set; }
         public DateTime ThoiGianBatDau { get; set; }
-        public DateTime ThoiGianKetThuc { get; set; }
+        public DateTime? ThoiGianKetThuc { get; set; }
         public string NoiDung { get; set; }
         public string TTKN { get; set; }
         public bool IsHuy { get; set; }

@@ -1,12 +1,10 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
 using Abp.UI;
-using AbpCompanyName.AbpProjectName.CayGold.GiaoDich.Dto;
 using AbpCompanyName.AbpProjectName.DTO;
 using AbpCompanyName.AbpProjectName.HocKyNangs.Dto;
 using AbpCompanyName.AbpProjectName.Model.HocKyNangs;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,7 +19,7 @@ namespace AbpCompanyName.AbpProjectName.HocKyNangAppservices
         public HocKyNangAppServices(
             IRepository<ViewHocKyNang> viewHocKyNangRepository
            , IRepository<HocKyNang> hocKyNangRepository
-           , IRepository<HocKyNang> _hocKyNangCTRepository
+           , IRepository<HocKyNangCT> _hocKyNangCTRepository
             ,
 IRepository<HocKyNangCT> hocKyNangCTRepository
 
@@ -61,7 +59,7 @@ IRepository<HocKyNangCT> hocKyNangCTRepository
                                 tasks = tasks.Where(p => p.TenKyNang.Contains(tenkynang));
                                 break;
                             case "ma":
-                                var mahockynang= (int)filter.Value;
+                                var mahockynang = (int)filter.Value;
 
                                 tasks = tasks.Where(p => p.MaHocKyNang == mahockynang);
 
@@ -69,7 +67,7 @@ IRepository<HocKyNangCT> hocKyNangCTRepository
                         }
                 }
             }
-        //    tasks = tasks.OrderByDescending(d => d);
+            //    tasks = tasks.OrderByDescending(d => d);
             var totalCount = tasks.Count();
             if (input.start.HasValue)
                 tasks = tasks.Skip(input.start.Value);
@@ -84,9 +82,21 @@ IRepository<HocKyNangCT> hocKyNangCTRepository
             {
                 TenKyNang = input.TenKyNang,
                 MoTa = input.MoTa,
-                ThoiLuong = input.ThoiLuong,                
+                ThoiLuong = input.ThoiLuong,
             };
             _hocKyNangRepository.Insert(hocKyNang);
+
+            CurrentUnitOfWork.SaveChanges();
+            return true;
+        }
+        public bool HoanThanhKyNang(int maHocKyNang)
+        {
+            var hocKyNang = _hocKyNangRepository.FirstOrDefault(d => d.MaHocKyNang == maHocKyNang) ?? throw new UserFriendlyException("Không thấy mã học kỹ năng");
+            if (hocKyNang.TTKN == "TT_A")
+                throw new UserFriendlyException("Đã hoàn thành không thể xác nhận");
+
+            hocKyNang.TTKN = "TT_A";
+            _hocKyNangRepository.Update(hocKyNang);
 
             CurrentUnitOfWork.SaveChanges();
             return true;
@@ -94,7 +104,7 @@ IRepository<HocKyNangCT> hocKyNangCTRepository
 
         public bool UpdateHocKyNang(UpdateHocKyNangInput input)
         {
-            var hocKyNang = _hocKyNangRepository.FirstOrDefault(  d => d.MaHocKyNang == input.MaHocKyNang);
+            var hocKyNang = _hocKyNangRepository.FirstOrDefault(d => d.MaHocKyNang == input.MaHocKyNang);
             if (hocKyNang == null)
                 return false;
 
@@ -119,32 +129,32 @@ IRepository<HocKyNangCT> hocKyNangCTRepository
             return true;
         }
 
-        public bool UpdateHocKyNangCT(UpdateHocKyNangCTInput input)
-        {
-            var hocKyNangCT = _hocKyNangCTRepository.FirstOrDefault(d => d.MaHocKyNang == input.MaHocKyNangCT);
-            if (hocKyNangCT == null)
-                return false;
+        //public bool UpdateHocKyNangCT(UpdateHocKyNangCTInput input)
+        //{
+        //    var hocKyNangCT = _hocKyNangCTRepository.FirstOrDefault(d => d.MaHocKyNang == input.MaHocKyNangCT);
+        //    if (hocKyNangCT == null)
+        //        return false;
 
-            // ... existing code ...
-            hocKyNangCT.ThoiGianBatDau = input.ThoiGianBatDau;
-            hocKyNangCT.ThoiGianKetThuc = input.ThoiGianKetThuc;
-            hocKyNangCT.NoiDung = input.NoiDung;
+        //    // ... existing code ...
+        //    hocKyNangCT.ThoiGianBatDau = input.ThoiGianBatDau;
+        //    hocKyNangCT.ThoiGianKetThuc = input.ThoiGianKetThuc;
+        //    hocKyNangCT.NoiDung = input.NoiDung;
 
-            _hocKyNangCTRepository.Update(hocKyNangCT);
-            CurrentUnitOfWork.SaveChanges();
-            return true;
-        }
+        //    _hocKyNangCTRepository.Update(hocKyNangCT);
+        //    CurrentUnitOfWork.SaveChanges();
+        //    return true;
+        //}
 
-        public bool DeleteHocKyNangCT(int maHocKyNangCT)
-        {
-            var hocKyNangCT = _hocKyNangCTRepository.FirstOrDefault(d => d.MaHocKyNangCT == maHocKyNangCT);
-            if (hocKyNangCT == null)
-                return false;
+        //public bool DeleteHocKyNangCT(int maHocKyNangCT)
+        //{
+        //    var hocKyNangCT = _hocKyNangCTRepository.FirstOrDefault(d => d.MaHocKyNangCT == maHocKyNangCT);
+        //    if (hocKyNangCT == null)
+        //        return false;
 
-            _hocKyNangCTRepository.Delete(hocKyNangCT);
-            CurrentUnitOfWork.SaveChanges();
-            return true;
-        }
+        //    _hocKyNangCTRepository.Delete(hocKyNangCT);
+        //    CurrentUnitOfWork.SaveChanges();
+        //    return true;
+        //}
 
     }
 }

@@ -1825,8 +1825,8 @@ namespace AbpCompanyName.AbpProjectName.Migrations
                     b.Property<string>("TenKyNang")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ThoiLuong")
-                        .HasColumnType("int");
+                    b.Property<double>("ThoiLuong")
+                        .HasColumnType("float");
 
                     b.HasKey("MaHocKyNang");
 
@@ -1874,8 +1874,11 @@ namespace AbpCompanyName.AbpProjectName.Migrations
                     b.Property<string>("TTKN")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("ThoiGianBatDau")
+                    b.Property<DateTime?>("ThoiGianBatDau")
                         .HasColumnType("datetime2");
+
+                    b.Property<double>("ThoiGianHoc")
+                        .HasColumnType("float");
 
                     b.Property<DateTime?>("ThoiGianKetThuc")
                         .HasColumnType("datetime2");
@@ -1893,29 +1896,8 @@ namespace AbpCompanyName.AbpProjectName.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaHocKyNang"));
 
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsHuy")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("MoTa")
                         .HasColumnType("nvarchar(max)");
@@ -1926,8 +1908,8 @@ namespace AbpCompanyName.AbpProjectName.Migrations
                     b.Property<string>("TenKyNang")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ThoiLuong")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<double>("ThoiLuong")
+                        .HasColumnType("float");
 
                     b.Property<string>("TrangThai")
                         .HasColumnType("nvarchar(max)");
@@ -1945,29 +1927,8 @@ namespace AbpCompanyName.AbpProjectName.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaHocKyNangCT"));
 
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsHuy")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
 
                     b.Property<int>("MaHocKyNang")
                         .HasColumnType("int");
